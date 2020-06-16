@@ -15,7 +15,7 @@ datagroup: nightly {
 persist_with: nightly
 
 explore: redshift_data_loads {
-  hidden: yes
+  group_label: "Redshift Admin Explore"
 }
 
 explore: redshift_db_space {

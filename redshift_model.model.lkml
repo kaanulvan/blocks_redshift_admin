@@ -18,6 +18,19 @@ explore: redshift_data_loads {
   group_label: "Redshift Admin Explore"
 }
 
+explore:  redshift_tables_list{
+  group_label: "Redshift Admin Explore"
+  join: redshift_primary_key {
+    sql_on: ${redshift_tables_list.table_catlog}=${redshift_primary_key.table_catalog} and
+          ${redshift_tables_list.table_name}=${redshift_primary_key.table_name} and
+            ${redshift_tables_list.table_schema}=${redshift_primary_key.table_schema}
+    ;;
+    type:left_outer
+    relationship: many_to_one
+  }
+
+}
+
 explore: redshift_db_space {
   hidden: yes
 }

@@ -121,8 +121,8 @@
       DS_DIST_BOTH: "#c13c07"
       DS_BCAST_INNER: "#d6a400"
       DS_DIST_ALL_INNER: "#9e0f62"
-    listen:
-      PDT: redshift_queries.pdt
+#     listen:
+#       PDT: redshift_queries.pdt
     row: 8
     col: 0
     width: 12
@@ -167,8 +167,8 @@
       show_hide: show
       first_last: first
       num_rows: '20'
-    listen:
-      PDT: redshift_queries.pdt
+#     listen:
+#       PDT: redshift_queries.pdt
     row: 8
     col: 12
     width: 12

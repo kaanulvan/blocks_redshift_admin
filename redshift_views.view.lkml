@@ -1082,3 +1082,64 @@ view: redshift_query_execution {
     sql: ${step_skew} ;;
   }
 }
+
+
+
+
+view: redshift_tables_primary_key {
+   derived_table: {
+    sql:
+
+ select t."table_schema"::varchar ,
+                 t."table_name"::varchar ,
+                 tco."constraint_name"::varchar,
+                 kcu."ordinal_position"::varchar as position,
+                 kcu."column_name"::varchar as key_column,
+                       tco."constraint_type"::varchar
+
+          from information_schema.table_constraints tco
+           join information_schema.key_column_usage kcu
+               on kcu.constraint_name = tco.constraint_name
+               and kcu.constraint_schema = tco.constraint_schema
+              right  join information_schema.tables t on t.table_catalog = kcu.table_catalog and t.table_schema = kcu.table_schema and t.table_name = kcu.table_name
+
+          order by kcu.table_schema,
+                   kcu.table_name,
+                   position
+    ;;
+  }
+  # dimensions #
+
+  # Identifiers {
+ dimension: table_name {
+   type:  string
+   sql: ${TABLE}.table_name  ;;
+ }
+
+  dimension: table_schema {
+    type:  string
+    sql: ${TABLE}.table_schema  ;;
+  }
+
+  dimension: constraint_name{
+    type:  string
+    sql: ${TABLE}.constraint_name  ;;
+  }
+
+  dimension: position{
+    type:  string
+    sql: ${TABLE}.position  ;;
+  }
+
+  dimension: key_column{
+    type:  string
+    sql: ${TABLE}.key_column  ;;
+  }
+
+  dimension: constraint_type{
+    type:  string
+    sql: ${TABLE}.constraint_type  ;;
+  }
+
+
+  }

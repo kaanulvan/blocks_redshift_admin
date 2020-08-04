@@ -35,7 +35,17 @@ view: redshift_primary_key {
     }
     # dimensions #
 
+
     # Identifiers {
+    dimension: sort_key {
+      type:  string
+      sql:  ${TABLE}.sort_key ;;
+    }
+
+    dimension: dist_key {
+      type: string
+      sql:  ${TABLE}.dist_key ;;
+    }
     dimension: table_catalog {
       type:  string
       sql: ${TABLE}.table_catalog  ;;

@@ -13,8 +13,10 @@ view: redshift_primary_key {
             CASE WHEN (c.contype = 'c'::"char") THEN 'CHECK'::text
                  WHEN (c.contype = 'f'::"char") THEN 'FOREIGN KEY'::text
                  WHEN (c.contype = 'p'::"char") THEN 'PRIMARY KEY'::text
-                 WHEN (c.contype = 'u'::"char") THEN 'UNIQUE'::text ELSE NULL::text END AS constraint_type
-                FROM pg_namespace nr, pg_class r, pg_attribute a, pg_constraint c, pg_user u,
+                 WHEN (c.contype = 'u'::"char") THEN 'UNIQUE'::text ELSE NULL::text END AS constraint_type,
+                 td.sortkey as sort_key,
+                 td.distkey as dist_key
+                FROM pg_namespace nr, pg_class r, pg_attribute a, pg_constraint c, pg_user u, pg_table_def td,
                      information_schema._pg_keypositions() pos(n)
                 WHERE nr.oid = r.relnamespace
                   AND r.oid = a.attrelid
@@ -23,6 +25,9 @@ view: redshift_primary_key {
                   AND (c.conkey[pos.n] = a.attnum)
                   AND r.relkind = 'r'::"char"
                   AND r.relowner = u.usesysid
+                  AND td.schemaname = nr.nspname
+
+                  AND td.tablename = r.relname
                  -- AND constraint_type='PRIMARY KEY'
                  -- and table_schema = 'dwh_il'
                 order by table_name, ordinal_position

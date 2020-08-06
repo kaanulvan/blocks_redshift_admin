@@ -156,9 +156,9 @@ view: redshift_primary_key {
         sql: ${TABLE}.sel;;
         html:
         {% if value  == 'Yes' %}
-        <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+        <p style="background-color:  rgba(104,247,158,0.3) ; color: black;">{{ rendered_value }}</font>
         {% else %}
-        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        <p style="background-color:  rgba(247, 119,104,0.3) ;  color: black;">{{ rendered_value }}</font>
         {% endif %};;
 
       }
@@ -167,21 +167,22 @@ view: redshift_primary_key {
         sql: ${TABLE}.ins ;;
         html:
         {% if value  == 'Yes' %}
-        <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+        <p style="background-color:  rgba(104,247,158,0.3) ;  color: black;">{{ rendered_value }}</font>
         {% else %}
-        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        <p style="background-color:  rgba(247, 119,104,0.3);  color: black;">{{ rendered_value }}</font>
         {% endif %};;
 
       }
       dimension: update_privilege{
-        type: string
+        type: yesno
         sql: ${TABLE}.upd ;;
         html:
         {% if value  == 'Yes' %}
-        <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+        <p style="background-color:  rgba(104,247,158,0.3) ;  color: black;">{{ rendered_value }}</font>
         {% else %}
-        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        <p style="background-color:  rgba(247, 119,104,0.3);  color: black;">{{ rendered_value }}</font>
         {% endif %};;
+
 
       }
       dimension: delete_privilege{
@@ -189,9 +190,9 @@ view: redshift_primary_key {
         sql: ${TABLE}.del ;;
         html:
         {% if value  == 'Yes' %}
-        <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+        <p style="background-color:  rgba(104,247,158,0.3) ;  color: black;">{{ rendered_value }}</font>
         {% else %}
-        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        <p style="background-color:  rgba(247, 119,104,0.3);  color: black;">{{ rendered_value }}</font>
         {% endif %};;
 
       }
@@ -200,9 +201,9 @@ view: redshift_primary_key {
         sql: ${TABLE}.ref;;
         html:
        {% if value  == 'Yes' %}
-           <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+           <p style="background-color:  rgba(104,247,158,0.3) ;  color: black;">{{ rendered_value }}</font>
         {% else %}
-        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        <p style="background-color:  rgba(247, 119,104,0.3);  color: black;">{{ rendered_value }}</font>
         {% endif %};;
 
       }

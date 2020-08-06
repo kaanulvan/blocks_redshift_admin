@@ -105,7 +105,73 @@ view: redshift_primary_key {
         type:  string
         sql: ${TABLE}.table_name ;;
       }
+}
+    view: users_schema_privileges {
 
+
+      derived_table: {
+        sql:
+        SELECT *
+              FROM
+                  (
+                  SELECT
+                      schemaname
+                      ,objectname
+                      ,usename
+                      ,HAS_TABLE_PRIVILEGE(usrs.usename, fullobj, 'select') AND has_schema_privilege(usrs.usename, schemaname, 'usage')  AS sel
+                      ,HAS_TABLE_PRIVILEGE(usrs.usename, fullobj, 'insert') AND has_schema_privilege(usrs.usename, schemaname, 'usage')  AS ins
+                      ,HAS_TABLE_PRIVILEGE(usrs.usename, fullobj, 'update') AND has_schema_privilege(usrs.usename, schemaname, 'usage')  AS upd
+                      ,HAS_TABLE_PRIVILEGE(usrs.usename, fullobj, 'delete') AND has_schema_privilege(usrs.usename, schemaname, 'usage')  AS del
+                      ,HAS_TABLE_PRIVILEGE(usrs.usename, fullobj, 'references') AND has_schema_privilege(usrs.usename, schemaname, 'usage')  AS ref
+                  FROM
+                      (
+                      SELECT schemaname, 't' AS obj_type, tablename AS objectname, schemaname + '.' + tablename AS fullobj FROM pg_tables
+                      WHERE schemaname not in ('pg_internal')
+                      UNION
+                      SELECT schemaname, 'v' AS obj_type, viewname AS objectname, schemaname + '.' + viewname AS fullobj FROM pg_views
+                      WHERE schemaname not in ('pg_internal')
+                      ) AS objs
+                      ,(SELECT * FROM pg_user) AS usrs
+                  ORDER BY fullobj
+                  )
+              WHERE (sel = true or ins = true or upd = true or del = true or ref = true)
+              and schemaname in ('dwh_il')
+              order by 3;;
+
+                }
+      dimension:schema_name{
+        type:  string
+        sql: ${TABLE}.schemaname ;;
+      }
+      dimension: table_name{
+        type:  string
+        sql: ${TABLE}.objectname ;;
+      }
+      dimension: username{
+        type:  string
+        sql: ${TABLE}.usename ;;
+      }
+      dimension:select_privilege{
+        type:  string
+        sql: ${TABLE}.sel;;
+      }
+      dimension: insert_privilege{
+        type:  string
+        sql: ${TABLE}.ins ;;
+      }
+      dimension: update_privilege{
+        type:  string
+        sql: ${TABLE}.upd ;;
+      }
+      dimension: delete_privilege{
+        type:  string
+        sql: ${TABLE}.del ;;
+      }
+      dimension: reference_privilege{
+        type:  string
+        sql: ${TABLE}.ref ;;
+      }
+ }
 
 
 
@@ -138,7 +204,7 @@ view: redshift_primary_key {
   #   type: sum
   #   sql: ${lifetime_orders} ;;
   # }
-}
+
 
 # view: redshift_primary_key {
 #   # Or, you could make this view a derived table, like this:

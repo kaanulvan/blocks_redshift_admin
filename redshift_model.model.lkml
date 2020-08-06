@@ -39,6 +39,10 @@ explore: redshift_etl_errors {
   hidden: yes
 }
 
+explore: users_schema_privileges {
+  group_label: "Redshift Admin Explore"
+}
+
 explore: redshift_tables {
   hidden: yes
   view_label: "[Redshift Tables]"

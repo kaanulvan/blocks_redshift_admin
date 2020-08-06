@@ -157,7 +157,7 @@ view: redshift_primary_key {
       }
       dimension: insert_privilege{
         type:  string
-        sql: ${TABLE}.ins ;;
+        sql:  ${TABLE}.ins  ;;
       }
       dimension: update_privilege{
         type:  string

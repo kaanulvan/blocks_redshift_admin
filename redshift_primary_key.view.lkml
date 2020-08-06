@@ -152,24 +152,59 @@ view: redshift_primary_key {
         sql: ${TABLE}.usename ;;
       }
       dimension:select_privilege{
-        type:  string
+        type:  yesno
         sql: ${TABLE}.sel;;
+        html:
+        {% if value  == 'Yes' %}
+        <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+        {% else %}
+        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        {% endif %};;
+
       }
       dimension: insert_privilege{
-        type:  string
-        sql:  ${TABLE}.ins  ;;
+        type: yesno
+        sql: ${TABLE}.ins ;;
+        html:
+        {% if value  == 'Yes' %}
+        <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+        {% else %}
+        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        {% endif %};;
+
       }
       dimension: update_privilege{
-        type:  string
+        type: string
         sql: ${TABLE}.upd ;;
+        html:
+        {% if value  == 'Yes' %}
+        <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+        {% else %}
+        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        {% endif %};;
+
       }
       dimension: delete_privilege{
-        type:  string
+        type:  yesno
         sql: ${TABLE}.del ;;
+        html:
+        {% if value  == 'Yes' %}
+        <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+        {% else %}
+        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        {% endif %};;
+
       }
       dimension: reference_privilege{
-        type:  string
-        sql: ${TABLE}.ref ;;
+        type:  yesno
+        sql: ${TABLE}.ref;;
+        html:
+       {% if value  == 'Yes' %}
+           <p style="background-color:  rgba(104,247,158,0.3) ;">{{ rendered_value }}</font>
+        {% else %}
+        <p style="background-color:  rgba(247, 119,104,0.3);">{{ rendered_value }}</font>
+        {% endif %};;
+
       }
  }
 
